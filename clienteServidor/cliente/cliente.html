@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Datos</title>
+</head>
+<body>
+  <h1>Lista de Datos</h1>
+  <ul id="lista-datos"></ul>
+
+  <script>
+    async function cargarDatos() {
+      try {
+        const response = await fetch('http://localhost:4321/datos');
+        const data = await response.json();
+        const listaDatos = document.getElementById('lista-datos');
+        listaDatos.innerHTML = ''; // Limpiar lista antes de agregar datos
+        data.forEach(dato => {
+          const listItem = document.createElement('li');
+          listItem.textContent = dato.nombre; // Suponiendo que tienes un campo 'nombre'
+          listaDatos.appendChild(listItem);
+        });
+      } catch (error) {
+        console.error('Error al cargar datos:', error);
+      }
+    }
+
+    cargarDatos(); // Llamar a la función al cargar la página
+  </script>
+</body>
+</html>

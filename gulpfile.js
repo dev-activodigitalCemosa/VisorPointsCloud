@@ -1,4 +1,3 @@
-
 const path = require('path');
 const gulp = require('gulp');
 const exec = require('child_process').exec;
@@ -12,6 +11,10 @@ const {watch} = gulp;
 const {createExamplesPage} = require("./src/tools/create_potree_page");
 const {createGithubPage} = require("./src/tools/create_github_page");
 const {createIconsPage} = require("./src/tools/create_icons_page");
+
+//Cliente Servidor
+const backendServer = require('./clienteServidor/servidor/servidor');
+
 
 
 let paths = {
@@ -184,7 +187,15 @@ gulp.task("pack", async function(){
 	});
 });
 
-gulp.task('watch', gulp.parallel("build", "pack", "webserver", async function() {
+//servidor
+
+gulp.task('backend', async function () {
+    // Inicia el servidor backend
+    // Asegúrate de que el servidor backend esté configurado para escuchar en un puerto diferente al del servidor web
+});
+
+
+gulp.task('watch', gulp.parallel("build", "pack", "webserver","backend", async function() {
 
 	let watchlist = [
 		'src/**/*.js',
@@ -201,5 +212,6 @@ gulp.task('watch', gulp.parallel("build", "pack", "webserver", async function() 
 	watch(watchlist, gulp.series("build", "pack"));
 
 }));
+
 
 
