@@ -16,14 +16,35 @@ const client = new Client({
 });
 client.connect();
 
-// Ruta para obtener datos de la base de datos
-app.get('/datos', async (req, res) => {
+app.get('/nube-puntos', async (req, res) => {
   try {
-    const result = await client.query('SELECT * FROM nube_puntos');
+    const result = await client.query('SELECT nombre FROM nube_puntos');
     res.json(result.rows);
   } catch (error) {
-    console.error('Error al obtener datos:', error);
-    res.status(500).json({ error: 'Error al obtener datos' });
+    console.error('Error al obtener nubes de puntos:', error);
+    res.status(500).json({ error: 'Error al obtener nubes de puntos' });
+  }
+});
+
+app.get('/ruta/:nom', async (req, res) => {
+  try {
+    const { nom } = req.params;
+    const result = await client.query('SELECT ruta FROM nube_puntos where nombre = $1',[nom]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener nubes de puntos:', error);
+    res.status(500).json({ error: 'Error al obtener la ruta' });
+  }
+});
+
+app.get('/usuario/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const result = await client.query('SELECT * FROM usuarios WHERE id = $1', [id]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener datos del usuario:', error);
+    res.status(500).json({ error: 'Error al obtener datos del usuario' });
   }
 });
 

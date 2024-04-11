@@ -191,7 +191,6 @@ gulp.task("pack", async function(){
 
 gulp.task('backend', async function () {
     // Inicia el servidor backend
-    // Asegúrate de que el servidor backend esté configurado para escuchar en un puerto diferente al del servidor web
 });
 
 
